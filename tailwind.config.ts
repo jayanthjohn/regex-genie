@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,6 +53,10 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				code: {
+					bg: 'hsl(var(--code-bg))',
+					border: 'hsl(var(--code-border))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -63,10 +68,24 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-card': 'var(--gradient-card)'
+			},
+			boxShadow: {
+				'elegant': 'var(--shadow-elegant)',
+				'glow': 'var(--shadow-glow)'
+			},
+			fontFamily: {
+				'mono': ['JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', 'monospace']
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			transitionProperty: {
+				'smooth': 'var(--transition-smooth)'
 			},
 			keyframes: {
 				'accordion-down': {
