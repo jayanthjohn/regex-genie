@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Copy, CheckCircle2, Wand2, Code, TestTube } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Copy, CheckCircle2, Wand2, Code, TestTube, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface RegexResult {
@@ -22,6 +22,7 @@ export const RegexGenerator = () => {
   const [customPrompt, setCustomPrompt] = useState('');
   const [result, setResult] = useState<RegexResult | null>(null);
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
+  const [selectedView, setSelectedView] = useState<'regex' | 'jmeter' | 'groovy' | 'test'>('regex');
 
   const escapeRegex = (str: string) => {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -238,15 +239,34 @@ if (matcher.find()) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <Tabs defaultValue="regex" className="w-full">
-                <TabsList className="grid w-full grid-cols-4">
-                  <TabsTrigger value="regex">Regex Pattern</TabsTrigger>
-                  <TabsTrigger value="jmeter">JMeter Config</TabsTrigger>
-                  <TabsTrigger value="groovy">Groovy Script</TabsTrigger>
-                  <TabsTrigger value="test">Test Results</TabsTrigger>
-                </TabsList>
+              <div className="space-y-4">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-48">
+                      {selectedView === 'regex' && 'Regex Pattern'}
+                      {selectedView === 'jmeter' && 'JMeter Config'}
+                      {selectedView === 'groovy' && 'Groovy Script'}
+                      {selectedView === 'test' && 'Test Results'}
+                      <ChevronDown className="ml-2 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={() => setSelectedView('regex')}>
+                      Regex Pattern
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedView('jmeter')}>
+                      JMeter Config
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedView('groovy')}>
+                      Groovy Script
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedView('test')}>
+                      Test Results
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-                <TabsContent value="regex" className="space-y-4">
+                {selectedView === 'regex' && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <Label>Generated Regex Pattern</Label>
@@ -258,9 +278,9 @@ if (matcher.find()) {
                       </code>
                     </div>
                   </div>
-                </TabsContent>
+                )}
 
-                <TabsContent value="jmeter" className="space-y-4">
+                {selectedView === 'jmeter' && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <Label>JMeter Regular Expression Extractor XML</Label>
@@ -272,9 +292,9 @@ if (matcher.find()) {
                       </pre>
                     </div>
                   </div>
-                </TabsContent>
+                )}
 
-                <TabsContent value="groovy" className="space-y-4">
+                {selectedView === 'groovy' && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <Label>Groovy Script</Label>
@@ -286,9 +306,9 @@ if (matcher.find()) {
                       </pre>
                     </div>
                   </div>
-                </TabsContent>
+                )}
 
-                <TabsContent value="test" className="space-y-4">
+                {selectedView === 'test' && (
                   <div className="space-y-2">
                     <Label>Pattern Test Results</Label>
                     <div className="bg-code-bg border border-code-border rounded-md p-4">
@@ -310,8 +330,8 @@ if (matcher.find()) {
                       )}
                     </div>
                   </div>
-                </TabsContent>
-              </Tabs>
+                )}
+              </div>
             </CardContent>
           </Card>
         )}
